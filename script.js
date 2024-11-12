@@ -1,9 +1,4 @@
-
-
-
-
-
-
+ 
 async function obtenerTasa() {  
     try {
         const response = await fetch(localStorage.getItem('url_bd') + '/get-tasa'); 
@@ -17,8 +12,10 @@ async function obtenerTasa() {
         console.error('Error:', error);
 	}
 }
-obtenerTasa();
 
+document.addEventListener('DOMContentLoaded', function() {
+    obtenerTasa();
+  });
 
 
 function agregarNuevaEntrada(monto, nombre, fecha, imagen, id) {
