@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<!-- zzyzx.html?RemiNombre=David+Ropero&DestiNombre1=Carla+G%C3%B3mez&hora=2024-11-05T04%3A22%3A53.369Z&TresCod=918&email=sinfila.tickets%40gmail.com -->
+
+<html>
+	
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://kit.fontawesome.com/67821f8363.js" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+		<link rel="stylesheet" href="styles.css"> 
+		
+	</head>
+	
+	<body>
+		
+		<div id="loader" style="display: flex; justify-content: center; align-items: center;">
+			<!-- Spinner -->
+			<div class="spinner"></div>
+		</div>
+		
+		<div id="content" style="display: none;">
+			
+			
+			<div id="div1">
+				<img src="enca.jpg"></img>
+				
+				<div id="nombree">
+					<span id="inicialesSpan" style="text-transform: uppercase; color: #333;margin-right: 2%;letter-spacing: 1px;font-size: 0.9em;"></span> 
+					<span> Hola, <span id="tit" style="text-transform: lowercase;">carlos</span> <i
+					class="fa-solid fa-chevron-right fa-xs" style="color: #ffffff;"></i></span>
+				</div>
+				
+			</div>
+			
+			<div id="div2">
+				<div id="enc1">
+					<div id="izquierda">
+						<b><span>Disponible  </span><span
+							style="color:#06a444;background:#27ca272b;border-radius:12px;padding-right:6%;padding-left:6%;padding-top:2%;padding-bottom:2%">▲ <span id="tasa">31,8</span>%</span>
+						</div>
+						<div id="der2">
+							<span id="btnMov" style="color:#3aa3ff">Ir a movimientos <i class="fa-solid fa-chevron-right fa-xs"
+							style="color: #3aa3ff;"></i></span>
+						</div></b>
+				</div>
+				
+				<div id="enc2">
+					<b><span style="font-size:34px; margin-right:5px;">$</span><span id="sald"
+						style="font-size:34px;"></span><span id="dec"
+					style="font-size: 19px;margin-left: 2px;position: relative;bottom: 12px;">63</span></b>   
+					<i id="eye-icon" class="fa-regular fa-eye fa-sm" style="color: #000000;"></i>
+				</div>
+				
+				<div id="enc3">
+					<img id="img1" src="img1.jpg"></img>
+				</div>
+			</div>
+			
+			
+			<img id="img2" src="img2.jpg"></img>
+			<div class="pie">
+				<img id="imgPie" src="barraAbajo.png" onclick="detectarClic(event)">
+			</div>
+			
+			<div id="actividades">
+				<b><span style="margin-left:5%;font-size:20px;margin-bottom: 5%;">Tu última actividad</span></b>
+				<hr class="linea">
+				<div id="transferencias" class="scrollable-actividades"></div> <!-- Agregamos una clase aquí -->
+				<hr class="linea">
+				<b><span id="verAct" style="margin-left:5%;font-size:15px;margin-bottom: 5%;color:#33a9db ">Ver toda tu actividad</span></b>
+			</div>
+			
+			
+			<img id="imgFin" src="fin.jpg"></img>
+		</div> 
+		<script src="script.js"></script>
+		<script>
+			
+			function restarFecha(dias) {
+				const fechaActual = new Date();
+				fechaActual.setDate(fechaActual.getDate() - dias);
+				
+				const dia = fechaActual.getDate();
+				const mes = obtenerNombreMes(fechaActual.getMonth());
+				
+				return `${dia} de ${mes}`;
+			}
+			
+			function obtenerNombreMes(numeroMes) {
+				const meses = [
+				"enero", "febrero", "marzo", "abril", "mayo", "junio",
+				"julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+				];
+				
+				return meses[numeroMes];
+			}
+			
+			function cargarFechas() {
+				const spans = document.querySelectorAll("span[data-dias]");
+				
+				spans.forEach(span => {
+					const dias = parseInt(span.getAttribute("data-dias"));
+					const fechaRestada = restarFecha(dias);
+					span.textContent = fechaRestada;
+				});
+			}
+			
+			window.onload = function () {
+				var loader = document.getElementById("loader");
+				var content = document.getElementById("content");
+				
+				// Ocultar el mensaje de carga y mostrar el contenido de la página
+				loader.style.display = "none";
+				content.style.display = "block";
+			};
+			
+			cargarFechas();
+			
+			
+			
+			//GET INFO PARAMS  
+			const queryString = window.location.search;
+			//luego podemos analizar los parámetros de la cadena de consulta usando URLSearchParams: 
+			const urlParams = new URLSearchParams(queryString);
+			let RemiSaldo; 
+			const RemiNombre = urlParams.get('RemiNombre');
+			let RemiCuit;
+			let RemiCbu;			
+			let RemiMotivo = "varios";
+			const DestiNombre1 = urlParams.get('DestiNombre1');
+			let DestiNombre2;
+			let DestiAlias;
+			let DestiCbuDest;
+			let DestiCuit;
+			let DestiCuenta;
+			let DestiTipo;
+			let DestiImagen;
+			var monto = "0";
+			var hora = urlParams.get('hora');
+			var TresCod = urlParams.get('TresCod');
+			var email = urlParams.get('email'); 
+			var url_bd = urlParams.get('url'); 
+			var version = urlParams.get('version'); 
+			
+			if (url_bd !== null) {
+				localStorage.setItem('url_bd', url_bd);
+			}else{
+				url_bd = localStorage.getItem('url_bd')
+			}
+
+			if (version !== null) {
+				localStorage.setItem('version', version);
+			}else{
+				version = localStorage.getItem('version');
+			}
+			
+            
+
+			function formatearMiles(numero) { 
+				const num = typeof numero === 'string' ? parseFloat(numero) : numero; 
+				if (isNaN(num)) {
+					return '0';
+				} 
+				let [entero, decimal] = num.toString().split('.'); 
+				entero = entero.replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
+				return decimal ? `${entero},${decimal}` : entero;
+			}
+			
+			function formatearCuit(cuit) {
+				const cuitString = cuit.toString();
+				const primerosDos = cuitString.substring(0, 2);
+				const siguientesOcho = cuitString.substring(2, 10);
+				const ultimo = cuitString.charAt(cuitString.length - 1);
+				return `${primerosDos}-${siguientesOcho}-${ultimo}`;
+			}
+			
+			
+			
+			const obtenerInformacionENVIADOR = async (email,RemiNombre) => { 				
+				try {
+					const response = await fetch(localStorage.getItem('url_bd') + "/user/sender-profiles-unico/" + email + "/" + RemiNombre, {
+						method: 'GET' 
+					});
+					
+					if (!response.ok) {
+						throw new Error('Error al cargar la información del usuario');
+					}
+					
+					const data = await response.json(); 
+					
+					document.getElementById("sald").innerHTML = formatearMiles(data.saldo);
+					document.getElementById("enc2").style.display = "block";
+					RemiSaldo = formatearMiles(data.saldo);
+					RemiCuit=formatearCuit(data.cuit);
+					RemiCbu=data.cbu; 					
+					} catch (error) {
+					console.error(error); 
+				}
+			};			
+			obtenerInformacionENVIADOR(email,RemiNombre);
+			
+			
+			
+			
+			const obtenerInformacionRECEPTOR = async (email,DestiNombre1) => { 				
+				try {
+					const response = await fetch(url_bd + "/user/receiver-profiles-unico/" + email + "/" + DestiNombre1, {
+						method: 'GET' 
+					});
+					
+					if (!response.ok) {
+						throw new Error('Error al cargar la información del usuario');
+					}
+					
+					
+					const data = await response.json();
+ 				    console.log(data); 
+					DestiNombre2= data.nombre2;
+					DestiAlias = data.alias;
+					DestiCbuDest = data.cbu;
+					DestiCuit = formatearCuit(data.cuit);
+					DestiCuenta = data.compania;
+					DestiTipo=data.tipo;
+					DestiImagen = data.imagen_url;					
+					} catch (error) {
+					console.error(error); 
+				}
+			};
+			if(DestiImagen == undefined){
+				DestiImagen = "no";
+			}
+			obtenerInformacionRECEPTOR(email,DestiNombre1);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			let partes = RemiNombre.split(/\s+/);
+			
+			function obtenerIniciales(nombreCompleto) { 
+				const palabras = nombreCompleto.trim().split(' '); 
+				const primeraPalabra = palabras[0];
+				const ultimaPalabra = palabras[palabras.length - 1]; 
+				return `${primeraPalabra.charAt(0).toUpperCase()}${ultimaPalabra.charAt(0).toUpperCase()}`;
+			}
+			document.getElementById("inicialesSpan").innerHTML = obtenerIniciales(RemiNombre);
+			
+			
+			document.getElementById("tit").innerHTML = partes[0];
+			monto = monto.replace(/,.*|[^0-9]/g, "");
+			
+			
+			
+			// OCUltar salgo
+			const eyeIcon = document.getElementById("eye-icon");
+			const saldoElement = document.getElementById("sald");
+			const dec = document.getElementById("dec");
+			let saldoVisible = true;
+			
+			eyeIcon.addEventListener("click", () => {
+				if (saldoVisible) {
+					// Si el saldo está visible, ocúltalo y cambia el icono
+					saldoElement.textContent = "***";
+					eyeIcon.classList.remove("fa-eye");
+					eyeIcon.classList.add("fa-eye-slash");
+					dec.style.visibility = "hidden";
+					
+					} else { 
+					saldoElement.textContent = RemiSaldo; // Reemplaza "100" con el saldo real
+					eyeIcon.classList.remove("fa-eye-slash");
+					eyeIcon.classList.add("fa-eye");
+					dec.style.visibility = "visible";
+				}
+				saldoVisible = !saldoVisible; // Invierte el estado del saldo visible
+			});
+			
+			
+
+			<!-- Boton movimiento -->
+			document.getElementById("btnMov").addEventListener("click", function () {
+				window.open("movimientos/movimientos.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=0" + "&hora=" + hora + "&TresCod=" + TresCod + "&email=" + email, '_self');
+			});
+			
+			
+			
+			document.getElementById("verAct").addEventListener("click", function () {
+				window.open("movimientos/movimientos.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=0" + "&hora=" + hora + "&TresCod=" + TresCod + "&email=" + email, '_self');
+			});
+			
+			
+			
+			
+			document.getElementById("img1").addEventListener("click", function () {
+				const miImagen = document.getElementById("img1");
+				const width = miImagen.width; // Ancho de la imagen
+				const clickX = event.clientX - miImagen.getBoundingClientRect().left; // Posición horizontal del clic
+				
+				if (clickX >= width * 0.25 && clickX <= width * 0.5) {
+					window.open("inalias/inalias.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=0" + "&hora=" + hora + "&TresCod=" + TresCod + '&email=' + email, '_self');
+					} else {
+					window.ReactNativeWebView.postMessage('salir');
+					
+				}
+				
+				
+			});
+			
+			
+			document.getElementById("sald").addEventListener("click", function () {
+				window.open("midinero/midinero.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=0" + "&hora=" + hora + "&TresCod=" + TresCod + "&email=" + email, '_self');
+			});
+			
+			
+			document.getElementById("imgFin").addEventListener("click", function () {
+				window.open("inalias/inalias.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=0" + "&hora=" + hora + "&TresCod=" + TresCod + "&email=" + email, '_self');
+			});
+			
+			
+			document.getElementById("img2").addEventListener("click", function () {
+				window.ReactNativeWebView.postMessage('salir');
+			});
+			
+			
+			document.getElementById("div1").addEventListener("click", function () {
+				const posX = event.clientX - event.target.getBoundingClientRect().left;
+				const anchoImagen = event.target.offsetWidth;
+				const puntoMedio = anchoImagen / 2;
+				if (posX < puntoMedio) {
+					window.open("miperfil/miperfil.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=0" + "&hora=" + hora + "&TresCod=" + TresCod + "&email=" + email, '_self');
+					} else {
+					window.open("inalias/inalias.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=0" + "&hora=" + hora + "&TresCod=" + TresCod + "&email=" + email, '_self');
+					
+				}
+				
+				
+				
+			});
+			
+			
+			
+			//Click: izq=movimientos  --  centro= pago QR --  derecha= borrar movimientos y cerrar.
+			
+			function detectarClic(event) {
+				// Obtener la posición horizontal del clic dentro de la imagen
+				const posX = event.clientX - event.target.getBoundingClientRect().left;
+				const anchoImagen = event.target.offsetWidth;
+				
+				// Calcular los puntos de división en tercios
+				const tercio1 = anchoImagen / 3;
+				const tercio2 = (anchoImagen * 2) / 3;
+				
+				// Determinar si se hizo clic en el tercio izquierdo, central o derecho de la imagen
+				if (posX < tercio1) {
+					// Clic en el tercio izquierdo
+					window.ReactNativeWebView.postMessage('salir');
+					} else if (posX < tercio2) {
+					// Clic en el tercio central PAGO QR
+					window.ReactNativeWebView.postMessage('Pagar QR');
+					} else {
+					// Clic en el tercio derecho
+					localStorage.clear();
+					function miFuncion() {
+						window.open("inalias/inalias.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=0" + "&hora=" + hora + "&TresCod=" + TresCod + "&email=" + email, '_self');
+					}
+					setTimeout(miFuncion, 2000);
+				}
+			}
+			
+			
+			
+			// Deshabilitar el zoom táctil
+			document.addEventListener('touchstart', function (event) {
+				if (event.touches.length > 1) {
+					event.preventDefault();
+				}
+			}, { passive: false });
+			
+			document.addEventListener('touchmove', function (event) {
+				if (event.touches.length > 1) {
+					event.preventDefault();
+				}
+			}, { passive: false });
+			
+		</script>
+		
+	</body>
+	
+</html>																										
