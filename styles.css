@@ -124,7 +124,47 @@ body {
 }
 
 #enc3 {
- 	margin-top: 6%;
+ 	margin-top: 4%;
+}
+
+.containerCR {
+    position: relative;
+    display: inline-block;
+}
+
+.pulse-container {
+    position: absolute;
+    bottom: 4.6em;
+    right: 3.8em;
+}
+
+.pulse-ring {
+    position: absolute;
+	width: 1.3em;
+    height: 1.3em;
+    border: 2px solid #0066cc;
+    border-radius: 50%;
+    animation: pulse 3s ease-out infinite;
+    opacity: 0;
+}
+
+.pulse-ring:nth-child(2) {
+    animation-delay: 1s;
+}
+
+.pulse-ring:nth-child(3) {
+    animation-delay: 2s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
 }
 
 #enc3 img {
@@ -143,7 +183,7 @@ body {
 
 
 #div2 span {	
- 	font-size: 14px; 
+ 	font-size: 15px; 
 }
 
 
