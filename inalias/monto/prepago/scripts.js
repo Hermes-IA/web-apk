@@ -7,6 +7,7 @@ document.getElementById("div1").addEventListener("click", () => {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
 var notificacion = "no";
 
 
@@ -131,4 +132,4 @@ function enviador(){
 	
 }
 
-
+});
