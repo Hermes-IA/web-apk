@@ -82,7 +82,7 @@ document.getElementById("div1").addEventListener("click", () => {
 
 
 		setTimeout(function () {
-			if (email == "cosas.314@gmail.com") {
+			if (email == "de.celus.web@gmail.com") {
 				enviador();
 			} else {
 				if (localStorage.getItem('version') == "impact") {
