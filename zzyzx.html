@@ -20,18 +20,36 @@
 		</div>
 		
 		<div id="content" style="display: none;">
-			
-			
+ 
+
 			<div id="div1">
 				<img src="enca.jpg"></img>
-				
+	
 				<div id="nombree">
 					<span id="inicialesSpan" style="text-transform: uppercase; color: #333;margin-right: 2%;letter-spacing: 1px;font-size: 0.9em;"></span> 
-					<span> Hola, <span id="tit" style="text-transform: lowercase;">carlos</span> <i
-					class="fa-solid fa-chevron-right fa-xs" style="color: #ffffff;"></i></span>
+					<span> <span id="hola">Hola, </span><span id="tit" style="text-transform: lowercase;">carlos</span> <i
+							class="fa-solid fa-chevron-right fa-xs" style="color: #ffffff;"></i></span>
 				</div>
-				
+				<i class="fa-regular fa-eye eye-icon" style="color: #ffffffe3;"></i>
 			</div>
+			<!-- Script animacion barra superior -->
+			<script>
+				let lastScrollTop = 0;
+				const header = document.getElementById('div1');
+				const threshold = 50;
+	
+				window.addEventListener('scroll', () => {
+					const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+					if (scrollTop > threshold) {
+						header.classList.add('scrolled');
+					} else {
+						header.classList.remove('scrolled');
+					}
+	
+					lastScrollTop = scrollTop;
+				});
+			</script>
+			<!-- Fin animacion barra superior -->
 			
 			<div id="div2">
 				<div id="enc1">
@@ -237,13 +255,7 @@
 			}
 			obtenerInformacionRECEPTOR(email,DestiNombre1);
 			
-			
-			
-			
-			
-			
-			
-			
+			 
 			
 			let partes = RemiNombre.split(/\s+/);
 			
