@@ -96,6 +96,9 @@ function animateButtonClick() {
 		}
 	}, 6100);
 
+
+}
+
 function enviador(){
 	
 	var montoSinPuntos = monto.replace(/\./g, '');
@@ -127,6 +130,5 @@ function enviador(){
 	
 	
 }
-
 
 
