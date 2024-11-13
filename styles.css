@@ -74,30 +74,66 @@ body {
 }
 
 
+/* ANIMACION BARRA SUPERIOR */
 #nombree {
- 	font-family: 'Proxima Nova', sans-serif;
- 	position: absolute;
- 	top: 53%;
- 	left: 3.5%;
-	width: 100%;
+	font-family: 'Proxima Nova', sans-serif;
+	text-shadow: -0.1px 0 white, 0 0.1px white, 0 -0.1px white, 0 0.1px white;
+	position: absolute;
+	margin-left: 2px;
+	margin-top: 1%;
+    top: 49%;
+    left: 2.8%;
+	white-space: nowrap; 
 }
 
-#nombree {
- 	font-family: 'Proxima Nova', sans-serif;
- 	text-shadow: -0.1px 0 white, 0 0.1px white, 0 -0.1px white, 0 0.1px white;
- 	margin-left: 2px;
+ 
+
+#hola {
+    display: inline-block;
+    transition: opacity 0.3s ease;
 }
 
-#tasa{
-	color:#06a444;
+#tit {
+    display: inline-block;
+    position: relative;
+    transition: transform 0.3s ease;
 }
 
-.fa-solid,
-.fas {
- 	font-weight: 900;
- 	font-size: 9px;
- 	margin-left: 5px;
+.scrolled #tit {
+    transform: translateX(-100%);
 }
+
+.scrolled #hola {
+    opacity: 0;
+}
+
+.fa-solid, .fas {
+    font-weight: 900;
+    font-size: 9px;
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.scrolled .fa-chevron-right {
+    transform: translateX(-550%);
+}
+
+/* Estilos para el ojo */
+.eye-icon {
+    position: absolute;
+    right: 38%;
+    bottom: -50px; /* Inicialmente oculto debajo */
+    font-size: 18px !important;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.scrolled .eye-icon {
+    bottom: 35%; /* Se posiciona en el centro vertical */
+    transform: translateY(50%);
+    opacity: 1;
+}
+/* FINNN ANIMACION BARRA SUPERIOR */
 
 #div2 {
  	font-family: 'Proxima Nova', sans-serif;
