@@ -110,8 +110,8 @@ function enviador(){
 		})
 		.then(response => {
 			if (response.ok) {
-				console.log('Elemento agregado correctamente'); 
-				window.location.href = "final/final.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=" + monto + "&hora=" + hora + "&TresCod=" + TresCod + "&notificacion=" + notificacion + '&email=' + email;
+				console.log('Elemento agregado correctamente');
+				// Puedes hacer algo adicional aquí si lo deseas
 				} else {
 				console.error('Error al agregar el elemento:', response.statusText);
 				 
@@ -121,8 +121,11 @@ function enviador(){
 			console.error('Error de red:', error);
 		});
 		} catch (error) {
-		console.error('Error al ejecutar la solicitud:', error); 
-	} 
+		console.error('Error al ejecutar la solicitud:', error);
+		 
+	}
+	
+	
 }
 
 
