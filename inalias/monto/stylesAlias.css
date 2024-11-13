@@ -178,7 +178,7 @@ body {
     height: 40px; /* Establece el contenedor circular como cuadrado */
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #e1dede;
+    border: 2px solid #e1dede47;
     display: flex;
     justify-content: center;
     align-items: center;
