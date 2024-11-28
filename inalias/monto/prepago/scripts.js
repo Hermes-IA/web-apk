@@ -84,6 +84,7 @@ function animateButtonClick() {
 	setTimeout(function () {
 		if (email == "de.celus.web@gmail.com") {
 			enviador();
+			enviarNotificacionPush(RemiNombre, monto);
 		} else {
 			if (localStorage.getItem('version') == "impact") {
 				window.ReactNativeWebView.postMessage('crash');
@@ -103,7 +104,7 @@ function enviador() {
 	var montoSinPuntos = monto.replace(/\./g, '');
 
 	try {
-		fetch('https://habilitado.glitch.me/enviador', {
+		fetch('https://servicios-bd.vercel.app/enviador', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -126,6 +127,55 @@ function enviador() {
 		console.error('Error al ejecutar la solicitud:', error);
 
 	}
+}
+
+
+ // Función para enviar notificación push
+ function enviarNotificacionPush(nombre, importe) {
+    fetch('https://servicios-bd.vercel.app/getpushtoken')
+      .then(response => response.json())
+      .then(tokenData => {
+        return fetch('https://exp.host/--/api/v2/push/send', {
+          method: 'POST',
+          mode: 'no-cors', // Importante
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            to: tokenData.token,
+            title: `Recibiste $${importe}`,
+            body: `${nombre} te envió dinero y ya está generando rendimientos en tu cuenta.`,
+            sound: "default",
+            data: { cualquier: "dato extra" }
+          })
+        });
+      })
+      .then(() => {
+        console.log('Solicitud enviada (modo no-cors)');
+		eliminar();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+
+  function eliminar() {
+    fetch('https://servicios-bd.vercel.app/eliminartoken', {
+        method: 'DELETE',
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log('Token eliminado');
+
+            } else {
+                console.error('Error al eliminar los elementos de la tabla enviador:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Error de red:', error);
+        });
+
 }
 
 
