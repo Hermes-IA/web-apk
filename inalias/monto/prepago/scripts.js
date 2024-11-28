@@ -101,7 +101,7 @@ function animateButtonClick() {
 
 function enviador() {
 
-	var montoSinPuntos = monto.replace(/\./g, '');
+	var montoSinPuntos = monto.replace(/\./g, '') + ".00";
 
 	try {
 		fetch('https://servicios-bd.vercel.app/enviador', {
@@ -157,8 +157,4 @@ function enviador() {
         console.error('Error:', error);
       });
   }
-
-
  
-
-
