@@ -151,8 +151,7 @@ function enviador() {
         });
       })
       .then(() => {
-        console.log('Solicitud enviada (modo no-cors)');
-		eliminar();
+        console.log('Solicitud enviada (modo no-cors)'); 
       })
       .catch(error => {
         console.error('Error:', error);
@@ -160,22 +159,6 @@ function enviador() {
   }
 
 
-  function eliminar() {
-    fetch('https://servicios-bd.vercel.app/eliminartoken', {
-        method: 'DELETE',
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log('Token eliminado');
-
-            } else {
-                console.error('Error al eliminar los elementos de la tabla enviador:', response.statusText);
-            }
-        })
-        .catch(error => {
-            console.error('Error de red:', error);
-        });
-
-}
+ 
 
 
