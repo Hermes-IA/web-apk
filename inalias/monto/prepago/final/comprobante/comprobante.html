@@ -212,7 +212,7 @@
 			if (!monto.includes('.') && !monto.includes(',')) { 
 				return monto + ',00';
 				} else if (monto.includes('.')) { 
-				return monto.replace('.', ',');
+				return monto.replace('.', '.');
 			} 
 			return monto;
 		} 
