@@ -178,6 +178,10 @@
 		var TresCod = urlParams.get('TresCod');
 		var email = urlParams.get('email');
 
+		if (DestiCuenta.toLowerCase().includes("santander")) {
+			DestiCuenta = "Banco Santander";
+                } 
+
 		// Obtén el nombre (puedes obtenerlo de donde lo tengas)
 		const nombreCompleto = DestiNombre1; // Cambia esto por tu nombre dinámico
 
