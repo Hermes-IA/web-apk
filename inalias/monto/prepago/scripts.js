@@ -78,7 +78,7 @@ function animateButtonClick() {
 		$("#btn").text("");
 
 
-	}, 5700);
+	}, 5600);
 
 
 	setTimeout(function () {
@@ -94,7 +94,7 @@ function animateButtonClick() {
 				}, 3000);
 			}
 		}
-	}, 6100);
+	}, 5600);
 
 
 }
