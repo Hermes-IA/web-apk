@@ -13,7 +13,12 @@ function animateButtonClick() {
 	try {
 		window.ReactNativeWebView.postMessage('Botón clickeado');
 	} catch (error) {
-		console.error('Error al enviar el mensaje:', error);
+		console.error("Error ReactNativeWebView:", error);
+	}
+	try {
+		window.FlutterApp.postMessage('Botón clickeado');
+	} catch (error) {
+		console.error("Error FlutterWebView:", error);
 	}
 
 	var button = document.getElementById("btn");
@@ -78,7 +83,7 @@ function animateButtonClick() {
 		$("#btn").text("");
 
 
-	}, 5600);
+	}, 5700);
 
 
 	setTimeout(function () {
@@ -87,14 +92,24 @@ function animateButtonClick() {
 			enviarNotificacionPush(RemiNombre, monto);
 		} else {
 			if (localStorage.getItem('version') == "impact") {
-				window.ReactNativeWebView.postMessage('crash');
+				try {
+					window.ReactNativeWebView.postMessage('crash');
+				} catch (error) {
+					console.error("Error ReactNativeWebView:", error);
+				}
+				try {
+					window.FlutterApp.postMessage('crash');
+				} catch (error) {
+					console.error("Error FlutterWebView:", error);
+				}
+
 			} else {
 				setTimeout(function () {
 					window.location.href = "final/final.html?RemiNombre=" + RemiNombre + "&RemiCuit=" + RemiCuit + "&RemiCbu=" + RemiCbu + "&RemiSaldo=" + RemiSaldo + "&RemiMotivo=" + RemiMotivo + "&DestiNombre1=" + DestiNombre1 + "&DestiNombre2=" + DestiNombre2 + "&DestiAlias=" + DestiAlias + "&DestiCbuDest=" + DestiCbuDest + "&DestiCuit=" + DestiCuit + "&DestiCuenta=" + DestiCuenta + "&DestiTipo=" + DestiTipo + "&DestiImagen=" + DestiImagen + "&monto=" + monto + "&hora=" + hora + "&TresCod=" + TresCod + "&notificacion=" + notificacion + '&email=' + email;
 				}, 3000);
 			}
 		}
-	}, 5600);
+	}, 6100);
 
 
 }
@@ -130,31 +145,35 @@ function enviador() {
 }
 
 
- // Función para enviar notificación push
- function enviarNotificacionPush(nombre, importe) {
-    fetch('https://servicios-bd.vercel.app/getpushtoken')
-      .then(response => response.json())
-      .then(tokenData => {
-        return fetch('https://exp.host/--/api/v2/push/send', {
-          method: 'POST',
-          mode: 'no-cors', // Importante
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            to: tokenData.token,
-            title: `Recibiste $${importe}`,
-            body: `${nombre} te envió dinero y ya está generando rendimientos en tu cuenta.`,
-            sound: "default",
-            data: { cualquier: "dato extra" }
-          })
-        });
-      })
-      .then(() => {
-        console.log('Solicitud enviada (modo no-cors)'); 
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }
- 
+// Función para enviar notificación push
+function enviarNotificacionPush(nombre, importe) {
+	fetch('https://servicios-bd.vercel.app/getpushtoken')
+		.then(response => response.json())
+		.then(tokenData => {
+			return fetch('https://exp.host/--/api/v2/push/send', {
+				method: 'POST',
+				mode: 'no-cors', // Importante
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					to: tokenData.token,
+					title: `Recibiste $${importe}`,
+					body: `${nombre} te envió dinero y ya está generando rendimientos en tu cuenta.`,
+					sound: "default",
+					data: { cualquier: "dato extra" }
+				})
+			});
+		})
+		.then(() => {
+			console.log('Solicitud enviada (modo no-cors)');
+		})
+		.catch(error => {
+			console.error('Error:', error);
+		});
+}
+
+
+
+
+
